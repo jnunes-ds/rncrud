@@ -11,13 +11,30 @@ export default props => {
             {
                 text: 'Sim',
                 onPress(){
-                    console.warn('delete' + user.id)
+                    console.warn('delete ' + user.id)
                 }
             },
             {
                 text: 'Não'
             }
         ])
+    }
+
+    function getAction(user){
+        return (
+            <>
+                <ListItem.Chevron
+                    onPress={() => props.navigation.navigate('UserForm', user)}
+                    iconProps={{name: "edit"}}
+                    iconStyle={{fontSize: 25, color: "orange"}}
+                />
+                <ListItem.Chevron
+                    onPress={() => confirmUserDelection(user)}
+                    iconProps={{name: 'delete'}}
+                    iconStyle={{fontSize: 25, color: "red"}}
+                />
+            </>
+        )
     }
 
     function getUserItem({ item: user }){
@@ -32,16 +49,7 @@ export default props => {
                     <ListItem.Title>{user.name}</ListItem.Title>
                     <ListItem.Subtitle>{user.email}</ListItem.Subtitle>
                 </ListItem.Content>
-                <ListItem.Chevron
-                    onPress={() => navigation.navigate('userForm', user)}
-                    iconProps={{name: "edit"}}
-                    iconStyle={{fontSize: 25, color: "orange"}}
-                />
-                <ListItem.Chevron
-                    onPress={() => confirmUserDelection(user)}
-                    iconProps={{name: 'delete'}}
-                    iconStyle={{fontSize: 25, color: "red"}}
-                />
+                {getAction(user)}
             </ListItem>
         )
     }
