@@ -4,10 +4,23 @@ import users from '../data/users';
 const initialState = { users };
 const UsersContext = createContext({});
 
+const actions = {
+    deleteUser(state, action){
+        const user = action.payload
+        return {
+            // ...state,
+            users: state.users.filter(u => u.id !== user.id)
+        }
+    }
+};
+
 export const UsersProvider = props => {
 
     function reducer(state, action){
-        console.warn(action);
+        if(action.type === 'deleteUser'){
+            const fn = actions[action.type];
+            return fn ? fn(state, action) : state;
+        }
         return state;
     }
     
